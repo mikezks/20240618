@@ -4,7 +4,6 @@ import { TicketsFacade } from './../../logic-flight/+state/facade';
 import { AsyncPipe, JsonPipe, NgFor, NgIf } from '@angular/common';
 import { FlightCardComponent } from '../../ui-flight/flight-card/flight-card.component';
 import { FlightFilterComponent } from '../../ui-flight/flight-filter/flight-filter.component';
-import { UiFlightModule } from '../../ui-flight/ui-flight.module';
 
 
 @Component({
@@ -14,7 +13,7 @@ import { UiFlightModule } from '../../ui-flight/ui-flight.module';
     AsyncPipe, JsonPipe,
     NgIf, NgFor,
     FlightCardComponent,
-    UiFlightModule
+    FlightFilterComponent
   ],
   templateUrl: './flight-search.component.html',
 })
