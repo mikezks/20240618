@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { injectApiUrl } from '../../util-config';
 
 
 @Component({
@@ -19,6 +20,8 @@ import { Component } from '@angular/core';
           <li>Performance</li>
           <li>... and much more!</li>
         </ul>
+
+        <p>{{ apiUrl }}</p>
       </div>
     </div>
   `,
@@ -29,4 +32,5 @@ import { Component } from '@angular/core';
   `]
 })
 export class HomeComponent {
+  protected apiUrl = injectApiUrl();
 }

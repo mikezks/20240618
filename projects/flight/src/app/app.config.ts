@@ -7,6 +7,7 @@ import { APP_ROUTES } from "./app.routes";
 import { routerFeature } from "./shared/logic-router-state";
 import { SharedModule } from "./shared/shared.module";
 import { UiCoreModule } from "./shared/ui-core/ui-core.module";
+import { provideConfigState } from "./shared/util-config";
 
 
 export const applicationConfig: ApplicationConfig = {
@@ -17,6 +18,7 @@ export const applicationConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptorsFromDi()
     ),
+    provideConfigState('./assets/config.state.json'),
     importProvidersFrom(
       StoreModule.forRoot(),
       EffectsModule.forRoot(),
