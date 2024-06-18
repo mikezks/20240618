@@ -1,21 +1,22 @@
-import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { Component, effect, input } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { routerFeature } from '../../../shared/logic-router-state';
-import { initialFlight } from '../../logic-flight';
-import { ActivatedRoute } from '@angular/router';
+import { Flight } from '../../logic-flight';
+import { JsonPipe } from '@angular/common';
 
 
 @Component({
     selector: 'app-flight-edit',
     templateUrl: './flight-edit.component.html',
     standalone: true,
-    imports: [ReactiveFormsModule]
+    imports: [
+      ReactiveFormsModule,
+      JsonPipe
+    ]
 })
-export class FlightEditComponent implements OnChanges {
-  private route = inject(ActivatedRoute);
-
-  @Input() flight = initialFlight;
+export class FlightEditComponent {
+  flight = input.required<Flight>();
 
   protected editForm = this.formBuilder.group({
     id: [0],
@@ -33,15 +34,7 @@ export class FlightEditComponent implements OnChanges {
       params => console.log(params)
     );
 
-    /* this.route.data.subscribe(
-      data => this.editForm.patchValue(data['flight'])
-    ); */
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['flight'].previousValue !== changes['flight'].currentValue) {
-      this.editForm.patchValue(this.flight);
-    }
+    effect(() => this.editForm.patchValue(this.flight()));
   }
 
   protected save(): void {
