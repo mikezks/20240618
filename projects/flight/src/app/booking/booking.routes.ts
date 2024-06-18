@@ -1,7 +1,8 @@
-import { importProvidersFrom } from '@angular/core';
-import { Routes } from '@angular/router';
+import { ENVIRONMENT_INITIALIZER, importProvidersFrom, inject } from '@angular/core';
+import { Router, Routes } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
+import { AuthService } from '../shared/logic-auth/auth-service/auth.service';
 import { FlightBookingComponent, FlightEditComponent, FlightSearchComponent } from './feature-flight';
 import { resolveFlight } from './logic-flight';
 import { TicketEffects } from './logic-flight/+state/effects';
@@ -15,9 +16,25 @@ export const BOOKING_ROUTES: Routes = [
       importProvidersFrom(
         StoreModule.forFeature(ticketFeature),
         EffectsModule.forFeature([TicketEffects]),
-      )
+      ),
+      {
+        provide: ENVIRONMENT_INITIALIZER,
+        multi: true,
+        useValue: () => {
+          console.log('BOOKING INIT');
+        }
+      },
+      /* provideHttpClient(
+        withInterceptors([
+          logInterceptor
+        ]),
+        withRequestsMadeViaParent()
+      ), */
     ],
     component: FlightBookingComponent,
+    canMatch: [
+      () => inject(AuthService).isLoggedIn.value || inject(Router).createUrlTree(['/home'])
+    ],
     children: [
       {
         path: '',
