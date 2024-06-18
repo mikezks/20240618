@@ -1,9 +1,9 @@
-import { NgModule, importProvidersFrom } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { FlightBookingComponent, FlightEditComponent, FlightSearchComponent } from './feature-flight';
-import { FlightResolver } from './logic-flight';
+import { importProvidersFrom } from '@angular/core';
+import { Routes } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
+import { FlightBookingComponent, FlightEditComponent, FlightSearchComponent } from './feature-flight';
+import { resolveFlight } from './logic-flight';
 import { TicketEffects } from './logic-flight/+state/effects';
 import { ticketFeature } from './logic-flight/+state/reducer';
 
@@ -40,7 +40,7 @@ export const BOOKING_ROUTES: Routes = [
             path: 'edit/:id',
             component: FlightEditComponent,
             resolve: {
-              flight: FlightResolver
+              flight: resolveFlight
             }
           }
         ]
