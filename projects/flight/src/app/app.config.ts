@@ -1,4 +1,4 @@
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import { provideHttpClient, withInterceptors, withInterceptorsFromDi } from "@angular/common/http";
 import { ApplicationConfig, importProvidersFrom } from "@angular/core";
 import { provideRouter, withComponentInputBinding } from "@angular/router";
 import { EffectsModule } from "@ngrx/effects";
@@ -8,6 +8,7 @@ import { routerFeature } from "./shared/logic-router-state";
 import { SharedModule } from "./shared/shared.module";
 import { UiCoreModule } from "./shared/ui-core/ui-core.module";
 import { provideConfigState } from "./shared/util-config";
+import { authInterceptor } from "./shared/logic-communication/http-interceptors/auth.interceptor";
 
 
 export const applicationConfig: ApplicationConfig = {
@@ -16,6 +17,9 @@ export const applicationConfig: ApplicationConfig = {
       withComponentInputBinding()
     ),
     provideHttpClient(
+      withInterceptors([
+        authInterceptor
+      ]),
       withInterceptorsFromDi()
     ),
     provideConfigState('./assets/config.state.json'),
