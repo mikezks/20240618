@@ -1,5 +1,5 @@
 import { Component, effect, input } from '@angular/core';
-import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { routerFeature } from '../../../shared/logic-router-state';
 import { Flight } from '../../logic-flight';
@@ -18,7 +18,7 @@ import { JsonPipe } from '@angular/common';
 export class FlightEditComponent {
   flight = input.required<Flight>();
 
-  protected editForm = this.formBuilder.group({
+  protected editForm = this.formBuilder.nonNullable.group({
     id: [0],
     from: [''],
     to: [''],
@@ -28,11 +28,17 @@ export class FlightEditComponent {
 
   constructor(
     private store: Store,
-    private formBuilder: NonNullableFormBuilder
+    private formBuilder: FormBuilder
   ) {
     this.store.select(routerFeature.selectRouteParams).subscribe(
       params => console.log(params)
     );
+
+    /* this.editForm.patchValue({
+      from: ''
+    });
+
+    this.editForm.getRawValue(); */
 
     effect(() => this.editForm.patchValue(this.flight()));
   }
