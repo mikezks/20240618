@@ -7,6 +7,19 @@ import { PassengerService } from '../data-access/passenger.service';
 import { Passenger } from '../model/passenger';
 
 
+const flightEntitiyState = {
+  entities: {
+    5: {
+      id: 5,
+      from: 'Barcelona',
+      to: 'Stockholm',
+      date: '',
+      delayed: true
+    }
+  },
+  ids: [5, 1, 9, 3]
+};
+
 export const PassengerStore = signalStore(
   { providedIn: 'root' },
   // State
