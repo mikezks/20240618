@@ -1,8 +1,10 @@
+import { filter } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Component, computed, effect, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Flight, FlightFilter, injectTicketsFacade } from '../../logic-flight';
 import { FlightCardComponent, FlightFilterComponent } from '../../ui-flight';
+import { SIGNAL } from '@angular/core/primitives/signals';
 
 
 @Component({
@@ -35,6 +37,30 @@ export class FlightSearchComponent {
 
   constructor() {
     effect(() => console.log(this.flightRoute()));
+
+    console.log(this.filter().from);
+    this.filter.update(filter => ({
+      ...filter,
+      from: 'Barcelona'
+    }));
+    console.log(this.filter().from);
+    this.filter.update(filter => ({
+      ...filter,
+      from: 'Madrid'
+    }));
+    console.log(this.filter().from);
+    this.filter.update(filter => ({
+      ...filter,
+      from: 'Rome'
+    }));
+    console.log(this.filter().from);
+    this.filter.update(filter => ({
+      ...filter,
+      from: 'Oslo'
+    }));
+    console.log(this.filter().from);
+
+    console.log(this.flightRoute[SIGNAL]);
   }
 
   protected search(filter: FlightFilter): void {
