@@ -34,3 +34,30 @@ export class TicketEffects {
   );
 
 }
+
+export const loadFlightsFn = createEffect(
+  /**
+   * Stream 1: Dispatched Actions
+   *  - Trigger
+   *  - State Provider: Action - from, to
+   */
+  (
+    actions$ = inject(Actions),
+    flightService = inject(FlightService),
+  ) => actions$.pipe(
+    // Filtering
+    ofType(ticketActions.flightsLoad),
+    /**
+     * Stream 2: API Backend Call
+     *  - State Provider: Array of Flight
+     */
+    switchMap(action => flightService.find(
+      action.from,
+      action.to
+    )),
+    // Transformation: Flight Array -> Action Flights loaded
+    map(flights => ticketActions.flightsLoaded({ flights }))
+  ), { functional: true }
+);
+
+export const ticketEffects = { loadFlightsFn };
