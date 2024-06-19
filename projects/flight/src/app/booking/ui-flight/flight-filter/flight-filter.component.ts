@@ -12,7 +12,7 @@ import { FlightFilter } from '../../logic-flight';
 })
 export class FlightFilterComponent {
   filter = input.required<FlightFilter>();
-  searchTrigger = output<FlightFilter>();
+  filterChange = output<FlightFilter>();
 
   protected inputFilterForm = inject(FormBuilder).nonNullable.group({
     from: ['', [Validators.required]],
@@ -29,6 +29,6 @@ export class FlightFilterComponent {
   }
 
   protected triggerSearch(): void {
-    this.searchTrigger.emit(this.inputFilterForm.getRawValue());
+    this.filterChange.emit(this.inputFilterForm.getRawValue());
   }
 }
